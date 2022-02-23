@@ -20,20 +20,33 @@ for item in items:
         print(" 광고 상품 제외")
         continue
 
-    
+
     name = item.find("div", attrs={"class":"name"}).get_text()
+
+    # 애플 제품 제외
+    if "Apple" in name:
+        print(" Apple 상품 제외")
+        continue
+
     price = item.find("strong", attrs={"class":"price-value"}).get_text()
 
+    # 평점 4.5 이상, 리뷰 100개 이상
     rate = item.find("em", attrs={"class":"rating"})
     if rate:
         rate = rate.get_text()
     else:
-        rate = "평점 없음"
+        print("평점 없음")
+        continue
 
-    rate_count = rate = item.find("span", attrs={"class":"rateing-total-count"})
+    rate_count = item.find("span", attrs={"class":"rating-total-count"})
     if rate_count:
         rate_count = rate_count.get_text()
+        rate_count = rate_count[1:-1]
     else:
-        rate_count = "평점 수 없음"
+        print("리뷰 없음")
+        continue
 
-    print(name, price, rate, rate_count)
+    if float(rate) >= 4.5 and int(rate_count) >= 100:
+        print(name, price, rate, rate_count)
+
+    

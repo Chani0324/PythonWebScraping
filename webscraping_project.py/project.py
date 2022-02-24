@@ -16,7 +16,9 @@ def scrape_weather():
     url = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EC%84%9C%EC%9A%B8+%EB%82%A0%EC%94%A8&oquery=%EB%9F%AC%EC%8B%9C%EC%95%84+%EB%AF%B8%EC%82%AC%EC%9D%BC&tqi=hmN7Csp0Jy0ssiBx5OGsssssssK-080287"
     soup = create_soup(url)
 
-    summary = soup.find("p", attrs={"class":"summary"}).get_text()
+
+    # attrs={'':['', '']} or 조건으로 찾는 방법과 attrs={'':'', '':''} and 조건으로 찾는 방법알아두기
+    summary = soup.find("p", attrs={"class":"summary"}).get_text() 
     curr_temp = soup.find("div", attrs={"class":"temperature_text"}).get_text().strip() # strip() : 빈공간 없어지게 함.
     min_temp = soup.find("span", attrs={"lowest"}).get_text()
     max_temp = soup.find("span", attrs={"highest"}).get_text()
